@@ -45,7 +45,7 @@
         }
 
         h2 {
-            text-align: left;
+            text-align: center;
             font-size: 1.25rem;
             color: #2c3e50;
             margin-bottom: 1rem;
@@ -70,28 +70,28 @@
             font-weight: 500;
         }
 
-        .input-group input {
+        .input-group input, .input-group select {
             padding: 0.5rem;
             border: 1px solid #bdc3c7;
             border-radius: 0.25rem;
             width: 150px;
             font-size: 1rem;
         }
-		
-		.max-hour-group {
-			text-align: center;
-		}
+
+        .max-hour-group {
+            text-align: center;
+        }
 
         .max-hour-group .counter {
             display: flex;
             align-items: center;
-			margin: 0 auto;
-			width: 8rem;
+            margin: 0 auto;
+            width: 8rem;
         }
-        
+
         .max-hour-group label {
-			margin: 0 auto;
-    	}
+            margin: 0 auto;
+        }
 
         .counter button {
             background-color: #bdc3c7;
@@ -234,17 +234,82 @@
         <h1>Duration and Efficacy by Dosage Amount and Frequency</h1>
         <h2>Medication</h2>
         <div class="inputs">
+            <!-- Medication Dropdown -->
+            <div class="input-group">
+                <label for="medication">Select Medication:</label>
+                <select id="medication">
+					<option value="custom" selected>Custom</option>
+					<option value="Albuterol" data-onset="0.2" data-half-life="3.8" data-duration="4.0">Albuterol</option>
+					<option value="Alprazolam" data-onset="1.0" data-half-life="14.0" data-duration="5.0">Alprazolam</option>
+					<option value="Amlodipine" data-onset="9.0" data-half-life="40.0" data-duration="24.0">Amlodipine</option>
+					<option value="Amoxicillin" data-onset="1.0" data-half-life="1.0" data-duration="7.0">Amoxicillin</option>
+					<option value="Aspirin" data-onset="0.8" data-half-life="2.0" data-duration="5.0">Aspirin</option>
+					<option value="Atorvastatin" data-onset="3.0" data-half-life="14.0" data-duration="24.0">Atorvastatin</option>
+					<option value="Ceftriaxone" data-onset="1.0" data-half-life="8.0" data-duration="24.0">Ceftriaxone</option>
+					<option value="Ciprofloxacin" data-onset="1.0" data-half-life="4.0" data-duration="12.0">Ciprofloxacin</option>
+					<option value="Clindamycin" data-onset="1.0" data-half-life="3.0" data-duration="6.0">Clindamycin</option>
+					<option value="Clonazepam" data-onset="1.0" data-half-life="34.0" data-duration="12.0">Clonazepam</option>
+					<option value="Cyclobenzaprine" data-onset="1.0" data-half-life="18.0" data-duration="12.0">Cyclobenzaprine</option>
+					<option value="Dexamphetamine" data-onset="1.0" data-half-life="10.0" data-duration="4.0">Dexamphetamine</option>
+					<option value="Diazepam" data-onset="0.5" data-half-life="48.0" data-duration="24.0">Diazepam</option>
+					<option value="Digoxin" data-onset="1.5" data-half-life="36.0" data-duration="72.0">Digoxin</option>
+					<option value="Doxycycline" data-onset="2.0" data-half-life="18.0" data-duration="24.0">Doxycycline</option>
+					<option value="Duloxetine" data-onset="6.0" data-half-life="12.0" data-duration="24.0">Duloxetine</option>
+					<option value="Enalapril" data-onset="1.0" data-half-life="11.0" data-duration="24.0">Enalapril</option>
+					<option value="Escitalopram" data-onset="3.0" data-half-life="27.0" data-duration="48.0">Escitalopram</option>
+					<option value="Famotidine" data-onset="1.0" data-half-life="2.5" data-duration="8.0">Famotidine</option>
+					<option value="Furosemide" data-onset="0.5" data-half-life="2.0" data-duration="6.0">Furosemide</option>
+					<option value="Gabapentin" data-onset="2.0" data-half-life="6.0" data-duration="8.0">Gabapentin</option>
+					<option value="Hydrochlorothiazide" data-onset="2.0" data-half-life="6.0" data-duration="12.0">Hydrochlorothiazide</option>
+					<option value="Hydrocodone" data-onset="0.5" data-half-life="4.0" data-duration="6.0">Hydrocodone</option>
+					<option value="Ibuprofen" data-onset="0.8" data-half-life="3.0" data-duration="5.0">Ibuprofen</option>
+					<option value="Lisdexamfetamine" data-onset="1.0" data-half-life="11.0" data-duration="4.0">Lisdexamfetamine (Vyvanse)</option>
+					<option value="Lisinopril" data-onset="1.0" data-half-life="12.0" data-duration="24.0">Lisinopril</option>
+					<option value="Lorazepam" data-onset="1.5" data-half-life="15.0" data-duration="7.0">Lorazepam</option>
+					<option value="Meloxicam" data-onset="4.0" data-half-life="20.0" data-duration="24.0">Meloxicam</option>
+					<option value="Metformin" data-onset="2.5" data-half-life="6.5" data-duration="9.0">Metformin</option>
+					<option value="Methotrexate" data-onset="6.0" data-half-life="12.0" data-duration="24.0">Methotrexate</option>
+					<option value="Metoprolol" data-onset="1.0" data-half-life="3.5" data-duration="12.0">Metoprolol</option>
+					<option value="Methylphenidate" data-onset="0.5" data-half-life="3.0" data-duration="4.0">Methylphenidate (Ritalin)</option>
+					<option value="Montelukast" data-onset="2.0" data-half-life="5.5" data-duration="24.0">Montelukast</option>
+					<option value="Morphine" data-onset="0.5" data-half-life="2.5" data-duration="4.0">Morphine</option>
+					<option value="Naproxen" data-onset="1.0" data-half-life="12.0" data-duration="12.0">Naproxen</option>
+					<option value="Nitroglycerin" data-onset="0.5" data-half-life="1.0" data-duration="4.0">Nitroglycerin</option>
+					<option value="Omeprazole" data-onset="2.0" data-half-life="0.8" data-duration="48.0">Omeprazole</option>
+					<option value="Ondansetron" data-onset="1.5" data-half-life="4.0" data-duration="12.0">Ondansetron</option>
+					<option value="Oxycodone" data-onset="0.5" data-half-life="4.0" data-duration="6.0">Oxycodone</option>
+					<option value="Paracetamol" data-onset="0.8" data-half-life="2.5" data-duration="5.0">Paracetamol</option>
+					<option value="Prednisone" data-onset="1.0" data-half-life="3.0" data-duration="18.0">Prednisone</option>
+					<option value="Propranolol" data-onset="1.0" data-half-life="4.0" data-duration="12.0">Propranolol</option>
+					<option value="Ranitidine" data-onset="1.0" data-half-life="2.0" data-duration="8.0">Ranitidine</option>
+					<option value="Sertraline" data-onset="6.0" data-half-life="26.0" data-duration="24.0">Sertraline</option>
+					<option value="Simvastatin" data-onset="3.0" data-half-life="2.0" data-duration="24.0">Simvastatin</option>
+					<option value="Spironolactone" data-onset="3.0" data-half-life="16.0" data-duration="24.0">Spironolactone</option>
+					<option value="Tramadol" data-onset="1.0" data-half-life="6.0" data-duration="6.0">Tramadol</option>
+					<option value="Trazodone" data-onset="1.0" data-half-life="7.0" data-duration="12.0">Trazodone</option>
+					<option value="Valproic Acid" data-onset="2.0" data-half-life="12.0" data-duration="24.0">Valproic Acid</option>
+					<option value="Venlafaxine" data-onset="6.0" data-half-life="5.0" data-duration="24.0">Venlafaxine</option>
+					<option value="Warfarin" data-onset="24.0" data-half-life="36.0" data-duration="48.0">Warfarin</option>
+					<option value="Zolpidem" data-onset="0.5" data-half-life="2.5" data-duration="6.0">Zolpidem</option>
+				</select>
+            </div>
+
+            <!-- Onset Input -->
             <div class="input-group">
                 <label for="onset">Onset of Action (h):</label>
-                <input type="number" id="onset" min="0" step="1" value="1">
+                <input type="number" id="onset" min="0" step="1.0" value="1">
             </div>
+
+            <!-- Half-Life Input -->
             <div class="input-group">
                 <label for="half-life">Half-Life (h):</label>
-                <input type="number" id="half-life" min="1" step="1" value="8">
+                <input type="number" id="half-life" min="1" step="1.0" value="8">
             </div>
+
+            <!-- Duration Input -->
             <div class="input-group">
                 <label for="duration">Duration of Effect (h):</label>
-                <input type="number" id="duration" min="1" step="1" value="4">
+                <input type="number" id="duration" min="1" step="1.0" value="4">
             </div>
         </div>
 
@@ -271,6 +336,7 @@
             This visualization tool may not be fully accessible to visually impaired users.
         </div>
     </div>
+
     <script>
         google.charts.load('current', { packages: ['corechart'] });
         google.charts.setOnLoadCallback(init);
@@ -291,6 +357,7 @@
         function init() {
             generateDosageInputs(maxHour);
 
+            document.getElementById('medication').addEventListener('change', handleMedicationChange);
             document.getElementById('onset').addEventListener('input', handleOnsetChange);
             document.getElementById('half-life').addEventListener('input', handleHalfLifeChange);
             document.getElementById('duration').addEventListener('input', handleDurationChange);
@@ -302,11 +369,40 @@
             drawBlankChart();
         }
 
+        function handleMedicationChange(e) {
+            const medicationSelect = e.target;
+            const selectedOption = medicationSelect.options[medicationSelect.selectedIndex];
+
+            // Only update if a medication other than "Custom" is selected
+            if (selectedOption.value !== "custom") {
+                const onsetValue = parseFloat(selectedOption.getAttribute('data-onset'));
+                const halfLifeValue = parseFloat(selectedOption.getAttribute('data-half-life'));
+                const durationValue = parseFloat(selectedOption.getAttribute('data-duration'));
+
+                document.getElementById('onset').value = onsetValue;
+                document.getElementById('half-life').value = halfLifeValue;
+                document.getElementById('duration').value = durationValue;
+
+                // Update the chart
+                onset = onsetValue;
+                halfLife = halfLifeValue;
+                duration = durationValue;
+
+                if (doses.some(dose => dose > 0)) {
+                    updateChart();
+                } else {
+                    drawBlankChart();
+                }
+            }
+        }
+
         function handleOnsetChange(e) {
             const value = parseFloat(e.target.value);
             if (isValidOnset(value)) {
                 onset = value;
-                updateChart();
+                if (doses.some(dose => dose > 0)) {
+                    updateChart();
+                }
             } else {
                 e.target.value = onset;
             }
@@ -316,7 +412,9 @@
             const value = parseFloat(e.target.value);
             if (isValidHalfLife(value)) {
                 halfLife = value;
-                updateChart();
+                if (doses.some(dose => dose > 0)) {
+                    updateChart();
+                }
             } else {
                 e.target.value = halfLife;
             }
@@ -326,7 +424,9 @@
             const value = parseFloat(e.target.value);
             if (isValidDuration(value)) {
                 duration = value;
-                updateChart();
+                if (doses.some(dose => dose > 0)) {
+                    updateChart();
+                }
             } else {
                 e.target.value = duration;
             }
@@ -338,7 +438,11 @@
             maxHour = newMax;
             document.getElementById('max-hour').value = maxHour;
             generateDosageInputs(maxHour);
-            updateChart();
+            if (doses.some(dose => dose > 0)) {
+                updateChart();
+            } else {
+                drawBlankChart();
+            }
         }
 
         function isValidOnset(value) {
@@ -387,7 +491,11 @@
                 return;
             }
             doses[hour] = value;
-            updateChart();
+            if (doses.some(dose => dose > 0)) {
+                updateChart();
+            } else {
+                drawBlankChart();
+            }
         }
 
         function isValidDose(value) {
