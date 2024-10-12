@@ -1,0 +1,98 @@
+function updateChart() {
+    // Prepare Data
+    data = new google.visualization.DataTable();
+    data.addColumn('number', 'Time (h)');
+    data.addColumn('number', 'Concentration (' + EFFECT_UNIT + ')');
+    data.addColumn('number', 'Efficacy');
+    data.addColumn({ type: 'string', role: 'tooltip' });
+
+    const efficacyOnset = parseFloat(document.getElementById('efficacy-onset').value);
+    const efficacyHalfLife = parseFloat(document.getElementById('efficacy-half-life').value);
+    const duration = parseFloat(document.getElementById('duration').value);
+    
+    const k = halfLife > 0 ? Math.log(2) / halfLife : 0; // Decay constant for concentration
+    const kEfficacy = efficacyHalfLife > 0 ? Math.log(2) / efficacyHalfLife : 0; // Decay constant for efficacy
+
+    let effectOverTime = [];
+    let efficacyOverTime = [];
+
+    for (let t = 0; t <= maxHour; t++) {
+        let totalEffect = 0;
+        let totalEfficacy = 0;
+
+        // Calculate concentration (existing code)
+        for (let doseTime = 0; doseTime <= t; doseTime++) {
+            const dose = doses[doseTime];
+            if (dose > 0) {
+                const timeSinceDose = t - doseTime;
+                if (timeSinceDose >= 0 && timeSinceDose < onset) {
+                    const effect = onset > 0 ? (timeSinceDose / onset) * dose : dose;
+                    totalEffect += effect;
+                } else if (timeSinceDose >= onset) {
+                    const timeAfterOnset = timeSinceDose - onset;
+                    const effect = dose * Math.exp(-k * timeAfterOnset);
+                    if (timeAfterOnset <= 5 * halfLife) {
+                        totalEffect += effect;
+                    }
+                }
+            }
+        }
+
+        // Calculate efficacy (new code)
+        if (t >= efficacyOnset && t <= efficacyOnset + duration) {
+            let timeSinceEfficacyOnset = t - efficacyOnset;
+            if (timeSinceEfficacyOnset <= efficacyHalfLife) {
+                totalEfficacy = (timeSinceEfficacyOnset / efficacyHalfLife) * 100; // Linear rise
+            } else {
+                timeSinceEfficacyOnset -= efficacyHalfLife;
+                totalEfficacy = 100 * Math.exp(-kEfficacy * timeSinceEfficacyOnset); // Exponential decay
+            }
+        }
+
+        effectOverTime.push(totalEffect);
+        efficacyOverTime.push(totalEfficacy);
+
+        const tooltipText = `Hours: ${t}\nConcentration: ${totalEffect.toFixed(2)}\nEfficacy: ${totalEfficacy.toFixed(2)}`;
+        data.addRow([t, totalEffect, totalEfficacy, tooltipText]);
+    }
+
+    const maxEffect = Math.max(...effectOverTime);
+    const maxEfficacy = Math.max(...efficacyOverTime);
+    const yMax = Math.max(maxEffect, maxEfficacy) * 1.2; // Add padding
+
+    // Chart options with two Y-axes
+    options = {
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        animation: {
+            duration: 500,
+            easing: 'inAndOut',
+        },
+        hAxis: {
+            title: 'Time (h)',
+            minValue: 0,
+            maxValue: maxHour,
+            gridlines: { count: maxHour + 1 },
+            format: 'decimal',
+            ticks: Array.from({ length: maxHour + 1 }, (_, i) => i),
+        },
+        vAxis: {
+            title: `Concentration and Efficacy`,
+            viewWindow: {
+                min: 0,
+                max: yMax,
+            },
+        },
+        series: {
+            0: { color: '#3498db', lineWidth: 2 }, // Concentration line (blue)
+            1: { color: '#e74c3c', lineWidth: 2 }, // Efficacy line (red)
+        },
+        backgroundColor: { fill: 'transparent' },
+        tooltip: { isHtml: false }, // Plain text tooltips
+    };
+
+    if (!chart) {
+        chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    }
+    chart.draw(data, options);
+}
